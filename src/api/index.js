@@ -15,7 +15,7 @@ const mapData = (data) => {
   const { cases, deaths, recovered } = data;
   const dates = Object.keys(cases).map(date => {
     return {
-      active: cases[date] - recovered[date],
+      active: cases[date] - recovered[date] - deaths[date],
       recovered: recovered[date],
       deaths: deaths[date],
       date,

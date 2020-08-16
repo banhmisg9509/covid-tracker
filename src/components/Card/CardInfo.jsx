@@ -13,7 +13,7 @@ function CardInfo({ title, noOfCases, lastUpdate, description, cssClasses, color
           <CountUp start={0} end={noOfCases} duration={2.5} separator=',' />
         </Typography>
         <Typography variant='button' className={colorText}>
-          {delta}+
+          {Math.abs(delta) + (delta >= 0 ? '+' : '-')}
         </Typography>
         <Typography color='textSecondary'>
           {new Date(lastUpdate).toDateString()}
