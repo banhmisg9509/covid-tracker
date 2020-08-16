@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'https://corona.lmao.ninja/v2/historical',
+  baseURL: 'https://corona.lmao.ninja/v2/historical/',
 });
 
 axiosClient.interceptors.response.use(function (response) {
