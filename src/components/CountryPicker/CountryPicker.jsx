@@ -1,29 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { fetchCountries } from 'api';
+import { FormControl, TextField } from '@material-ui/core';
+import AutoComplete from '@material-ui/lab/Autocomplete';
+import React from 'react';
+import countries from './countries.json';
 import styles from './CountryPicker.module.css';
-import { NativeSelect, FormControl } from '@material-ui/core';
 
 function CountryPicker({ handleCountryChange }) {
-  const [countries, setCountries] = useState([]);
-
-  useEffect(() => {
-    const fetchAPI = async () => {
-      setCountries(await fetchCountries());
-    };
-
-    fetchAPI();
-  }, [setCountries]);
-
   return (
     <FormControl className={styles.formControl}>
-      <NativeSelect onChange={(e) => handleCountryChange(e.target.value)}>
-        <option value=''>GLobal</option>
-        {countries.map((country, i) => (
-          <option key={i} value={country}>
-            {country}
-          </option>
-        ))}
-      </NativeSelect>
+      <AutoComplete
+        id='combo-box'
+        options={countries}
+        getOptionLabel={(country) => country}
+        onChange={(e, value) => handleCountryChange(value)}
+        renderInput={(params) => (
+          <TextField {...params} label='Countries' variant='outlined' />
+        )}
+      />
     </FormControl>
   );
 }

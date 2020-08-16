@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-
-export const axiosClient = axios.create({
-  baseURL: 'https://covid19.mathdro.id/api',
+const axiosClient = axios.create({
+  baseURL: 'https://corona.lmao.ninja/v2/historical',
 });
 
 axiosClient.interceptors.response.use(function (response) {
@@ -12,41 +11,44 @@ axiosClient.interceptors.response.use(function (response) {
   return response;
 });
 
+const mapData = (data) => {
+  const { cases, deaths, recovered } = data;
+  const dates = Object.keys(cases).map(date => {
+    return {
+      active: cases[date] - recovered[date],
+      recovered: recovered[date],
+      deaths: deaths[date],
+      date,
+    }
+  });
+
+  const lastDay = dates.length - 1;
+
+  const latest = {
+    ...dates[lastDay],
+    delta: {
+      active: dates[lastDay].active - dates[lastDay - 1].active,
+      recovered: dates[lastDay].recovered - dates[lastDay - 1].recovered,
+      deaths: dates[lastDay].deaths - dates[lastDay - 1].deaths,
+    }
+  };
+
+  return {
+    dates,
+    latest,
+  }
+}
+
 export const fetchData = async (country) => {
   try {
-    const countryDetail = !country ? '' : `/countries/${country}`;
-    const { confirmed, recovered, deaths, lastUpdate } = await axiosClient.get(countryDetail);
+    const url = !country ? '/all' : country
+    let data = await axiosClient.get(url);
+    if (url !== '/all') {
+      data = data.timeline
+    }
 
-    return {
-      active: confirmed.value - recovered.value,
-      recovered: recovered.value,
-      deaths: deaths.value,
-      lastUpdate: new Date(lastUpdate).toDateString()
-    };
-  } catch (error) {
-    console.error(error);
-  }
-}
+    return mapData(data);
 
-export const fetchDailyData = async () => {
-  try {
-    const data = await axiosClient.get('/daily')
-    return data.map(dailyData => {
-      return {
-        confirmed: dailyData.confirmed.total,
-        deaths: dailyData.deaths.total,
-        date: dailyData.reportDate
-      }
-    })
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-export const fetchCountries = async () => {
-  try {
-    const { countries } = await axiosClient.get('/countries');
-    return countries.map(country => country.name);
   } catch (error) {
     console.error(error);
   }

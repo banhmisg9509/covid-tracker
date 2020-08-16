@@ -1,4 +1,7 @@
 .container {
+  display: flex;
+  justify-content: center;  
+  width: 80%;
   margin: 50px 0;
 }
 
@@ -6,21 +9,45 @@
   border-bottom: 10px solid #093dbac4;
 }
 
+.infectedColor {
+  color: #093dbac4;
+}
+
 .recovered {
   border-bottom: 10px solid green;
+}
+
+.recoveredColor {
+  color: green;
 }
 
 .deaths {
   border-bottom: 10px solid deeppink;
 }
 
+.deathsColor {
+  color: deeppink;
+}
+
 .card {
   min-width: 320px;
   max-width: 420px;
+  margin: 10px;
+  transition: box-shadow 0.3s;
 }
 
-@media (max-width: 770px) {
+.card:hover {
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 960px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
   .card {
-    margin: 2% 0 !important;
+    width: 100%;
+    margin: 1% 0 !important;
   }
 }

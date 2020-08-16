@@ -2,7 +2,7 @@ import { Card, CardContent, Typography } from '@material-ui/core';
 import React from 'react';
 import CountUp from 'react-countup';
 
-function CardInfo({ title, noOfCases, lastUpdate, description, cssClasses }) {
+function CardInfo({ title, noOfCases, lastUpdate, description, cssClasses, colorText, delta }) {
   return (
     <Card className={cssClasses}>
       <CardContent>
@@ -12,7 +12,12 @@ function CardInfo({ title, noOfCases, lastUpdate, description, cssClasses }) {
         <Typography variant='h5'>
           <CountUp start={0} end={noOfCases} duration={2.5} separator=',' />
         </Typography>
-        <Typography color='textSecondary'>{lastUpdate}</Typography>
+        <Typography variant='button' className={colorText}>
+          {delta}+
+        </Typography>
+        <Typography color='textSecondary'>
+          {new Date(lastUpdate).toDateString()}
+        </Typography>
         <Typography variant='body2'>{description}</Typography>
       </CardContent>
     </Card>
