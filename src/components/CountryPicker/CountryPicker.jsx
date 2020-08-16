@@ -10,8 +10,14 @@ function CountryPicker({ handleCountryChange }) {
       <AutoComplete
         id='combo-box'
         options={countries}
-        getOptionLabel={({name}) => name}
-        onChange={(e, value) => handleCountryChange(value.iso2 ? value.iso2 : value.name)}
+        getOptionLabel={({ name }) => name}
+        onChange={(e, value) => {
+          let name = '';
+          if (value) {
+            name = value.iso2 ? value.iso2 : value.name;
+          }
+          handleCountryChange(name);
+        }}
         renderInput={(params) => (
           <TextField {...params} label='Countries' variant='outlined' />
         )}
