@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'http://api.coronatracker.com/v3/stats/worldometer/',
+  baseURL: 'https://api.coronatracker.com/v3/stats/worldometer/',
 });
 
 axiosClient.interceptors.response.use(function (response) {
