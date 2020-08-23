@@ -1,36 +1,23 @@
-import { fetchData } from 'api';
-import styles from 'App.module.css';
-import { Cards, Chart, CountryPicker } from 'components';
-import conronaImage from 'images/corona.png';
-import React, { Component } from 'react';
-import Ribbon from 'components/Ribbon/Ribbon';
+import { Home } from 'components';
+import AppState from 'context/appContext/appState';
+import React, { Fragment } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import styles from './App.module.css';
 
-export default class App extends Component {
-  state = {
-    data: {},
-    country: '',
-  };
-
-  async componentDidMount() {
-    const data = await fetchData();
-    this.setState({ data });
-  }
-
-  handleCountryChange = async (country) => {
-    const data = await fetchData(country);
-    this.setState({ country: country, data });
-  };
-
-  render() {
-    const { data, country } = this.state;
-    return (
-      <div className={styles.container}>
-        <Ribbon />
-        <img src={conronaImage} alt='COVID-19' className={styles.image} />
-        <Cards data={data.latest} />
-        <CountryPicker handleCountryChange={this.handleCountryChange} />
-        <Chart data={data} country={country} />
-      </div>
-    );
-  }
+function App() {
+  return (
+    <AppState>
+      <Router>
+        <Fragment>
+          <div className={styles.container}>
+            <Switch>
+              <Route exact path='/' component={Home} />
+            </Switch>
+          </div>
+        </Fragment>
+      </Router>
+    </AppState>
+  );
 }
+
+export default App;
