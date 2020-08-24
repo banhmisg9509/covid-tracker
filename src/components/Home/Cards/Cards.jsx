@@ -11,7 +11,7 @@ function Cards() {
     : {};
 
   const { newConfirmed, newRecovered, newDeaths } = newDailyData.length
-    ? newDailyData[0]
+    ? newDailyData[newDailyData.length - 1]
     : {};
 
   if (!data.length) {
