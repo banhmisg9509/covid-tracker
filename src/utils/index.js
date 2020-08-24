@@ -1,7 +1,9 @@
 const formatDate = (date) => {
-  let [m, d, y] = date.toLocaleDateString().split('/');
+  let d = date.getDate();
+  let m = date.getMonth() + 1;
+  let y = date.getFullYear();
 
-  m = m.length < 2 ? ('0' + +m) : m;
+  m = m < 10 ? ('0' + m) : m;
   return y + '-' + m + '-' + d;
 }
 
