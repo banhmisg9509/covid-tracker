@@ -4,6 +4,7 @@ const formatDate = (date) => {
   let y = date.getFullYear();
 
   m = m < 10 ? ('0' + m) : m;
+  d = d < 10 ? ('0' + d) : d;
   return y + '-' + m + '-' + d;
 }
 
